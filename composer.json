@@ -3,7 +3,8 @@
     "php": ">=7.1.0",
     "ext-PDO": "^7.1",
     "symfony/http-foundation": "^5.1",
-    "symfony/routing": "^5.1"
+    "symfony/routing": "^5.1",
+    "symfony/http-kernel": "^5.1"
   },
   "require-dev": {
 
