@@ -24,7 +24,7 @@ class Application
         $this->argumentResolver = $argumentResolver;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         $this->matcher->getContext()->fromRequest($request);
 

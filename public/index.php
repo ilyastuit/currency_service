@@ -25,6 +25,7 @@ $request->attributes->add($matcher->match($request->getPathInfo()));
 $controller = $controllerResolver->getController($request);
 $arguments = $argumentResolver->getArguments($request, $controller);
 
-$response = call_user_func_array($controller, $arguments);
+$framework = new \App\Application($matcher, $controllerResolver, $argumentResolver);
+$response = $framework->handle($request);
 
 $response->send();
