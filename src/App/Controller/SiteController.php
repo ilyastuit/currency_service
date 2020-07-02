@@ -49,8 +49,16 @@ class SiteController
         return new JsonResponse('Error.');
     }
 
-    public function currency($id)
+    public function currency(Request $request, $id)
     {
+        $user = new User($this->pdo);
+        $authorizationHeader = $request->headers->get('Authorization', false);
+
+        try {
+            $user->authorize($authorizationHeader);
+        } catch (\Exception $e) {
+            return new JsonResponse($e->getMessage());
+        }
         $currency = new Currency($this->pdo);
 
         if ($result = $currency->find($id)) {
