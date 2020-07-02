@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SiteController
 {
+    public const PER_PAGE = 3;
     private $pdo;
 
     public function __construct(\PDO $pdo)
@@ -32,7 +33,30 @@ class SiteController
             return new JsonResponse($e->getMessage());
         }
 
-        return new JsonResponse('123');
+        $limit = self::PER_PAGE;
+        $offset = ($page - 1) * $limit;
+
+        $currencies = $currency->getAll($offset, $limit);
+        if (!empty($currencies['currencies'])) {
+            $currencies['pages'] = [
+                'self' => $page,
+                'first' => 1,
+                'last' => ceil($currency->countAll() / self::PER_PAGE),
+            ];
+
+            return new JsonResponse($currencies);
+        }
+        return new JsonResponse('Error.');
+    }
+
+    public function currency($id)
+    {
+        $currency = new Currency($this->pdo);
+
+        if ($result = $currency->find($id)) {
+            return new JsonResponse($result);
+        }
+        return new JsonResponse('Not Found.');
     }
 
     public function auth(Request $request): Response

@@ -29,7 +29,31 @@ class Currency
         return $error;
     }
 
+    public function getAll(int $offset, int $limit): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM currency LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->execute();
 
+        $result['currencies'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function find($id)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM currency WHERE id = ?');
+        $stmt->execute([$id]);
+
+        return $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function countAll(): int
+    {
+        $stmt = $this->pdo->query('SELECT COUNT(id) FROM currency');
+        return $stmt->fetchColumn();
+    }
 
     private function getData()
     {
