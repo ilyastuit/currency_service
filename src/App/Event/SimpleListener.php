@@ -2,14 +2,16 @@
 
 namespace App\Event;
 
+use App\Model\User;
 use App\ResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SimpleListener implements EventSubscriberInterface
 {
     public function onResponse(ResponseEvent $event)
     {
-        //$event->getResponse()->setContent('Fatal Error');
+
     }
 
     public static function getSubscribedEvents()

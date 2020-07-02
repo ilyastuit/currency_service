@@ -15,8 +15,7 @@ class Currency
 
     public function updateCurrency()
     {
-        $data = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
-        $xml = json_decode(json_encode(XMLParser::decode($data)), true);
+        $xml = $this->getData();
         $error = false;
         foreach ($xml['Valute'] as $item) {
             $name = $item['Name'];
@@ -27,7 +26,14 @@ class Currency
                 $error = true;
             }
         }
-
         return $error;
+    }
+
+
+
+    private function getData()
+    {
+        $data = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
+        return $xml = json_decode(json_encode(XMLParser::decode($data)), true);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use http\Exception\BadHeaderException;
+use InvalidArgumentException;
+
 class User
 {
     private $pdo;
@@ -43,5 +46,19 @@ class User
     private function preparePassword($password): string
     {
         return md5($password);
+    }
+
+    public function authorize($authorizationHeader)
+    {
+        if (!$authorizationHeader) {
+            throw new BadHeaderException('Bearer authorization failed.');
+        }
+        $user = $this->findByToken(substr($authorizationHeader, 7));
+
+        if (!$user) {
+            throw new InvalidArgumentException('Token not valid.');
+        }
+
+        return  $user;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Currency;
 use App\Model\User;
+use http\Exception\BadHeaderException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,18 +21,18 @@ class SiteController
     public function index(Request $request): Response
     {
         $currency = new Currency($this->pdo);
+        $page = $request->attributes->get('page');
+
         $user = new User($this->pdo);
         $authorizationHeader = $request->headers->get('Authorization', false);
 
-        if ($authorizationHeader) {
-            $user = $user->findByToken(substr($authorizationHeader, 7));
-        } else {
-            return new JsonResponse('Bearer authorization failed.');
+        try {
+            $user->authorize($authorizationHeader);
+        } catch (\Exception $e) {
+            return new JsonResponse($e->getMessage());
         }
-        if (!$user) {
-            return new JsonResponse('Token not valid.');
-        }
-        return new JsonResponse($user);
+
+        return new JsonResponse('123');
     }
 
     public function auth(Request $request): Response

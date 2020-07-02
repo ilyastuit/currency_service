@@ -16,6 +16,7 @@ use Symfony\Component\Routing\RequestContext;
 
 $request = Request::createFromGlobals();
 $routes = include 'config/routes.php';
+$config = include 'config/config.php';
 
 $context = new RequestContext();
 $context->fromRequest($request);

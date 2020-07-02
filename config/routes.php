@@ -8,8 +8,8 @@ $routes->add('auth', new Routing\Route('/auth', [
     '_controller' => [new \App\Controller\SiteController($config['db']['connection']), 'auth'],
 ]));
 
-$routes->add('index', new Routing\Route('/{name}', [
-    'name' => null,
+$routes->add('index', new Routing\Route('/currencies/{page}', [
+    'page' => 1,
     '_controller' => [new \App\Controller\SiteController($config['db']['connection']), 'index'],
 ]));
 
