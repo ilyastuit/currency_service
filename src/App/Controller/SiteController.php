@@ -20,7 +20,7 @@ class SiteController
     {
         $user = new User($this->pdo);
         $authorizationHeader = $request->headers->get('Authorization', false);
-        // skip beyond "Bearer "
+
         if ($authorizationHeader) {
             $user = $user->findByToken(substr($authorizationHeader, 7));
         } else {
@@ -51,7 +51,7 @@ class SiteController
                 ]);
             }
         }
-        return new JsonResponse('Error');
+        return new JsonResponse('Error.');
 
     }
 }
