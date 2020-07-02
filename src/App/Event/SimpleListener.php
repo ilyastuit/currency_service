@@ -9,7 +9,7 @@ class SimpleListener implements EventSubscriberInterface
 {
     public function onResponse(ResponseEvent $event)
     {
-        $event->getResponse()->setContent('Fatal Error');
+        //$event->getResponse()->setContent('Fatal Error');
     }
 
     public static function getSubscribedEvents()

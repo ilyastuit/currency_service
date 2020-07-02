@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
 $request = Request::createFromGlobals();
-$routes = include __DIR__.'/../src/routes.php';
+$routes = include 'config/routes.php';
 
 $context = new RequestContext();
 $context->fromRequest($request);
