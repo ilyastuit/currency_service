@@ -1,0 +1,47 @@
+version: '2'
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: docker/nginx.docker
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/ssl/:/etc/nginx/ssl/
+    ports:
+      - "8080:443"
+    links:
+      - php-fpm
+  php-fpm:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+    environment:
+      - "DB_HOST=mysql"
+      - "DB_PORT=3306"
+  php-cli:
+    build:
+      context: ./
+      dockerfile: docker/php-cli.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+    environment:
+      - "DB_HOST=mysql"
+      - "DB_PORT=3306"
+    tty: true
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./storage/docker/mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_USER=app"
+      - "MYSQL_PASSWORD=root"
+      - "MYSQL_DATABASE=currency"
+    ports:
+      - "33061:3306"

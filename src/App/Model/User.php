@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use http\Exception\BadHeaderException;
+
 use InvalidArgumentException;
 
 class User
@@ -51,7 +51,7 @@ class User
     public function authorize($authorizationHeader)
     {
         if (!$authorizationHeader) {
-            throw new BadHeaderException('Bearer authorization failed.');
+            throw new \Exception('Bearer authorization failed.');
         }
         $user = $this->findByToken(substr($authorizationHeader, 7));
 
