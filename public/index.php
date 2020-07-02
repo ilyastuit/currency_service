@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
+
+
 $request = Request::createFromGlobals();
 $routes = include 'config/routes.php';
 

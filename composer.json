@@ -8,7 +8,7 @@
     "symfony/event-dispatcher": "^5.1",
     "robmorgan/phinx": "^0.12.3",
     "symfony/console": "^5.1",
-    "laravie/parser": "^2.0"
+    "jtrumbull/xml-parser": "^1.0"
   },
   "require-dev": {
 

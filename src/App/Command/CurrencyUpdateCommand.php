@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Model\Currency;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,6 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CurrencyUpdateCommand extends Command
 {
     protected static $defaultName = 'currency:update';
+    private $pdo;
+
+    public function __construct(\PDO $pdo, string $name = null)
+    {
+        parent::__construct($name);
+        $this->pdo = $pdo;
+    }
 
     protected function configure()
     {
@@ -24,11 +32,16 @@ class CurrencyUpdateCommand extends Command
             '================',
             '',
         ]);
+        $currency = new Currency($this->pdo);
 
-        $output->writeln('Whoa!');
+        if ($currency->updateCurrency()) {
+            $output->writeln('Something went wrong.');
+        } else {
+            $output->writeln('Whoa!');
+            $output->writeln('Currencies updated.');
+            return Command::FAILURE;
+        }
 
-        $output->write('You are about to ');
-        $output->writeln('update currencies.');
         return Command::SUCCESS;
     }
 }

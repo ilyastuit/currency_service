@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Currency;
 use App\Model\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class SiteController
 
     public function index(Request $request): Response
     {
+        $currency = new Currency($this->pdo);
         $user = new User($this->pdo);
         $authorizationHeader = $request->headers->get('Authorization', false);
 
