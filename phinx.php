@@ -1,7 +1,7 @@
 <?php
 
-require 'config/db.php';
-require 'config/config.php';
+$config = require 'config/db.php';
+$db = require 'config/config.php';
 
 return [
     'environments' =>  [
